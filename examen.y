@@ -14,6 +14,7 @@
     int yylex();
 
      map<string, float> variables;
+     map<string, float> metodos;
     extern int yylineno;
     void yyerror(const char * s){
         fprintf(stderr, "Line: %d, error: %s\n", yylineno, s);
@@ -54,13 +55,34 @@ statement: TK_PRINT '(' expres_Total ')' TK_PUNTOCOMA   { printf("%f\n",$3); }
     | if_stmt
     | expression TK_PUNTOCOMA
     | metodos_statement
+    | llamar_metodos
+ ;
+
+ llamar_metodos:  TK_IDENTIFICADOR '(' identificador_list ')' TK_PUNTOCOMA
+    {
+        if(metodos.count($1)){
+        
+    printf("Metodo utilizado!!!\n");
+    }else{
+        printf("Metodo no existe!!!\n");
+        exit(1);
+    }
+    }
  ;
 
 
- metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END;
+ metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+ {if(metodos.count($2)){
+        printf("Error metodo ya existe");
+        exit(1);
+    
+    }else{
+        metodos.insert(make_pair($2,0)); 
+    }
+ };
  
- identificador_list: %empty | identificador_list TK_IDENTIFICADOR
-                    | TK_COMIA 
+ identificador_list: TK_IDENTIFICADOR
+                    | TK_IDENTIFICADOR TK_COMIA  TK_IDENTIFICADOR
                     ;
 
 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list  TK_END ;
@@ -68,9 +90,10 @@ if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list  TK_END ;
 
 
 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA { 
-    //Mire con esta condicion actualizo el valor cuando la vuelve a declarar
+    //Condicion para que no las vuelva a declarar
     if(variables.count($2)){
-        variables.find($2)->second = $4;
+        printf("Error variable ya existe");
+        exit(1);
     
     }else{
         variables.insert(make_pair($2,$4)); 

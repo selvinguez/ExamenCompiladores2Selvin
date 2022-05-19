@@ -1,7 +1,6 @@
 let a = 5;
 let b = 20;
 print(a+b);
-let a = 10;
 print(a + b);
 print(a > b );
 print(a < b);
@@ -12,8 +11,23 @@ begin
   print(4+5);
 end
 
+let gcd(a, b) = begin
+    if (a == 0)
+    begin
+        print(4+5);
+    end
+end
+
+gcd(a, b); 
 
 
+let gcd2(a, b) = begin
+    if (a == 0)
+    begin
+        print(4-5);
+    end
+end
+ print(4+5);
 5 +5;
 6+10;
 

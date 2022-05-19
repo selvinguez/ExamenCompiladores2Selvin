@@ -1,6 +1,6 @@
-Estado 25 conflictos: 2 desplazamiento/reducción
-Estado 42 conflictos: 2 desplazamiento/reducción
-Estado 45 conflictos: 1 desplazamiento/reducción
+Estado 28 conflictos: 2 desplazamiento/reducción
+Estado 48 conflictos: 2 desplazamiento/reducción
+Estado 51 conflictos: 1 desplazamiento/reducción
 
 
 Gramática
@@ -17,59 +17,61 @@ Gramática
     6          | if_stmt
     7          | expression TK_PUNTOCOMA
     8          | metodos_statement
+    9          | llamar_metodos
 
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+   10 llamar_metodos: TK_IDENTIFICADOR '(' identificador_list ')' TK_PUNTOCOMA
 
-   10 identificador_list: %empty
-   11                   | identificador_list TK_IDENTIFICADOR
-   12                   | TK_COMIA
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
 
-   13 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list TK_END
+   12 identificador_list: TK_IDENTIFICADOR
+   13                   | TK_IDENTIFICADOR TK_COMIA TK_IDENTIFICADOR
 
-   14 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA
+   14 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list TK_END
 
-   15 expres_Total: expres_Total TK_IGUALIGUAL relacionalExpre
-   16             | relacionalExpre
+   15 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA
 
-   17 relacionalExpre: relacionalExpre TK_MAYOR expression
-   18                | relacionalExpre TK_MENOR expres_Total
-   19                | expression
+   16 expres_Total: expres_Total TK_IGUALIGUAL relacionalExpre
+   17             | relacionalExpre
 
-   20 expression: expression TK_MAS factor
-   21           | expression TK_MENOS factor
-   22           | factor
+   18 relacionalExpre: relacionalExpre TK_MAYOR expression
+   19                | relacionalExpre TK_MENOR expres_Total
+   20                | expression
 
-   23 factor: factor TK_MULTI term
-   24       | factor TK_DIVI term
-   25       | term
+   21 expression: expression TK_MAS factor
+   22           | expression TK_MENOS factor
+   23           | factor
 
-   26 term: TK_NUMBER
-   27     | TK_IDENTIFICADOR
+   24 factor: factor TK_MULTI term
+   25       | factor TK_DIVI term
+   26       | term
+
+   27 term: TK_NUMBER
+   28     | TK_IDENTIFICADOR
 
 
 Terminales con las reglas donde aparecen
 
     $end (0) 0
-    '(' (40) 4 9 13
-    ')' (41) 4 9 13
+    '(' (40) 4 10 11 14
+    ')' (41) 4 10 11 14
     error (256)
     TK_PRINT (258) 4
-    TK_PUNTOCOMA (259) 4 7 14
-    TK_MAS (260) 20
-    TK_MENOS (261) 21
-    TK_MULTI (262) 23
-    TK_DIVI (263) 24
-    TK_IGUAL (264) 9 14
-    TK_LET (265) 9 14
-    TK_IF (266) 13
-    TK_BEGIN (267) 9 13
-    TK_END (268) 9 13
-    TK_IGUALIGUAL (269) 15
-    TK_MAYOR (270) 17
-    TK_MENOR (271) 18
-    TK_COMIA (272) 12
-    TK_NUMBER <int_t> (273) 26
-    TK_IDENTIFICADOR <string_t> (274) 9 11 14 27
+    TK_PUNTOCOMA (259) 4 7 10 15
+    TK_MAS (260) 21
+    TK_MENOS (261) 22
+    TK_MULTI (262) 24
+    TK_DIVI (263) 25
+    TK_IGUAL (264) 11 15
+    TK_LET (265) 11 15
+    TK_IF (266) 14
+    TK_BEGIN (267) 11 14
+    TK_END (268) 11 14
+    TK_IGUALIGUAL (269) 16
+    TK_MAYOR (270) 18
+    TK_MENOR (271) 19
+    TK_COMIA (272) 13
+    TK_NUMBER <int_t> (273) 27
+    TK_IDENTIFICADOR <string_t> (274) 10 11 12 13 15 28
 
 
 No terminales con las reglas donde aparecen
@@ -81,37 +83,40 @@ No terminales con las reglas donde aparecen
         on right: 0
     statement_list (24)
         on left: 2 3
-        on right: 1 3 9 13
+        on right: 1 3 11 14
     statement (25)
-        on left: 4 5 6 7 8
+        on left: 4 5 6 7 8 9
         on right: 3
-    metodos_statement (26)
-        on left: 9
+    llamar_metodos (26)
+        on left: 10
+        on right: 9
+    metodos_statement (27)
+        on left: 11
         on right: 8
-    identificador_list (27)
-        on left: 10 11 12
-        on right: 9 11
-    if_stmt (28)
-        on left: 13
-        on right: 6
-    assignment_stmt <int_t> (29)
+    identificador_list (28)
+        on left: 12 13
+        on right: 10 11
+    if_stmt (29)
         on left: 14
+        on right: 6
+    assignment_stmt <int_t> (30)
+        on left: 15
         on right: 5
-    expres_Total <int_t> (30)
-        on left: 15 16
-        on right: 4 13 14 15 18
-    relacionalExpre <int_t> (31)
-        on left: 17 18 19
-        on right: 15 16 17 18
-    expression <int_t> (32)
-        on left: 20 21 22
-        on right: 7 17 19 20 21
-    factor <int_t> (33)
-        on left: 23 24 25
-        on right: 20 21 22 23 24
-    term <int_t> (34)
-        on left: 26 27
-        on right: 23 24 25
+    expres_Total <int_t> (31)
+        on left: 16 17
+        on right: 4 14 15 16 19
+    relacionalExpre <int_t> (32)
+        on left: 18 19 20
+        on right: 16 17 18 19
+    expression <int_t> (33)
+        on left: 21 22 23
+        on right: 7 18 20 21 22
+    factor <int_t> (34)
+        on left: 24 25 26
+        on right: 21 22 23 24 25
+    term <int_t> (35)
+        on left: 27 28
+        on right: 24 25 26
 
 
 Estado 0
@@ -145,12 +150,13 @@ Estado 2
     $default  reduce usando la regla 1 (input)
 
     statement          ir al estado 9
-    metodos_statement  ir al estado 10
-    if_stmt            ir al estado 11
-    assignment_stmt    ir al estado 12
-    expression         ir al estado 13
-    factor             ir al estado 14
-    term               ir al estado 15
+    llamar_metodos     ir al estado 10
+    metodos_statement  ir al estado 11
+    if_stmt            ir al estado 12
+    assignment_stmt    ir al estado 13
+    expression         ir al estado 14
+    factor             ir al estado 15
+    term               ir al estado 16
 
 
 Estado 3
@@ -164,36 +170,39 @@ Estado 4
 
     4 statement: TK_PRINT . '(' expres_Total ')' TK_PUNTOCOMA
 
-    '('  desplazar e ir al estado 16
+    '('  desplazar e ir al estado 17
 
 
 Estado 5
 
-    9 metodos_statement: TK_LET . TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
-   14 assignment_stmt: TK_LET . TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA
+   11 metodos_statement: TK_LET . TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+   15 assignment_stmt: TK_LET . TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA
 
-    TK_IDENTIFICADOR  desplazar e ir al estado 17
+    TK_IDENTIFICADOR  desplazar e ir al estado 18
 
 
 Estado 6
 
-   13 if_stmt: TK_IF . '(' expres_Total ')' TK_BEGIN statement_list TK_END
+   14 if_stmt: TK_IF . '(' expres_Total ')' TK_BEGIN statement_list TK_END
 
-    '('  desplazar e ir al estado 18
+    '('  desplazar e ir al estado 19
 
 
 Estado 7
 
-   26 term: TK_NUMBER .
+   27 term: TK_NUMBER .
 
-    $default  reduce usando la regla 26 (term)
+    $default  reduce usando la regla 27 (term)
 
 
 Estado 8
 
-   27 term: TK_IDENTIFICADOR .
+   10 llamar_metodos: TK_IDENTIFICADOR . '(' identificador_list ')' TK_PUNTOCOMA
+   28 term: TK_IDENTIFICADOR .
 
-    $default  reduce usando la regla 27 (term)
+    '('  desplazar e ir al estado 20
+
+    $default  reduce usando la regla 28 (term)
 
 
 Estado 9
@@ -205,467 +214,519 @@ Estado 9
 
 Estado 10
 
+    9 statement: llamar_metodos .
+
+    $default  reduce usando la regla 9 (statement)
+
+
+Estado 11
+
     8 statement: metodos_statement .
 
     $default  reduce usando la regla 8 (statement)
 
 
-Estado 11
+Estado 12
 
     6 statement: if_stmt .
 
     $default  reduce usando la regla 6 (statement)
 
 
-Estado 12
+Estado 13
 
     5 statement: assignment_stmt .
 
     $default  reduce usando la regla 5 (statement)
 
 
-Estado 13
-
-    7 statement: expression . TK_PUNTOCOMA
-   20 expression: expression . TK_MAS factor
-   21           | expression . TK_MENOS factor
-
-    TK_PUNTOCOMA  desplazar e ir al estado 19
-    TK_MAS        desplazar e ir al estado 20
-    TK_MENOS      desplazar e ir al estado 21
-
-
 Estado 14
 
-   22 expression: factor .
-   23 factor: factor . TK_MULTI term
-   24       | factor . TK_DIVI term
+    7 statement: expression . TK_PUNTOCOMA
+   21 expression: expression . TK_MAS factor
+   22           | expression . TK_MENOS factor
 
-    TK_MULTI  desplazar e ir al estado 22
-    TK_DIVI   desplazar e ir al estado 23
-
-    $default  reduce usando la regla 22 (expression)
+    TK_PUNTOCOMA  desplazar e ir al estado 21
+    TK_MAS        desplazar e ir al estado 22
+    TK_MENOS      desplazar e ir al estado 23
 
 
 Estado 15
 
-   25 factor: term .
+   23 expression: factor .
+   24 factor: factor . TK_MULTI term
+   25       | factor . TK_DIVI term
 
-    $default  reduce usando la regla 25 (factor)
+    TK_MULTI  desplazar e ir al estado 24
+    TK_DIVI   desplazar e ir al estado 25
+
+    $default  reduce usando la regla 23 (expression)
 
 
 Estado 16
 
-    4 statement: TK_PRINT '(' . expres_Total ')' TK_PUNTOCOMA
+   26 factor: term .
 
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    expres_Total     ir al estado 24
-    relacionalExpre  ir al estado 25
-    expression       ir al estado 26
-    factor           ir al estado 14
-    term             ir al estado 15
+    $default  reduce usando la regla 26 (factor)
 
 
 Estado 17
 
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR . '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
-   14 assignment_stmt: TK_LET TK_IDENTIFICADOR . TK_IGUAL expres_Total TK_PUNTOCOMA
+    4 statement: TK_PRINT '(' . expres_Total ')' TK_PUNTOCOMA
 
-    TK_IGUAL  desplazar e ir al estado 27
-    '('       desplazar e ir al estado 28
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    expres_Total     ir al estado 27
+    relacionalExpre  ir al estado 28
+    expression       ir al estado 29
+    factor           ir al estado 15
+    term             ir al estado 16
 
 
 Estado 18
 
-   13 if_stmt: TK_IF '(' . expres_Total ')' TK_BEGIN statement_list TK_END
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR . '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+   15 assignment_stmt: TK_LET TK_IDENTIFICADOR . TK_IGUAL expres_Total TK_PUNTOCOMA
 
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    expres_Total     ir al estado 29
-    relacionalExpre  ir al estado 25
-    expression       ir al estado 26
-    factor           ir al estado 14
-    term             ir al estado 15
+    TK_IGUAL  desplazar e ir al estado 30
+    '('       desplazar e ir al estado 31
 
 
 Estado 19
+
+   14 if_stmt: TK_IF '(' . expres_Total ')' TK_BEGIN statement_list TK_END
+
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    expres_Total     ir al estado 32
+    relacionalExpre  ir al estado 28
+    expression       ir al estado 29
+    factor           ir al estado 15
+    term             ir al estado 16
+
+
+Estado 20
+
+   10 llamar_metodos: TK_IDENTIFICADOR '(' . identificador_list ')' TK_PUNTOCOMA
+
+    TK_IDENTIFICADOR  desplazar e ir al estado 33
+
+    identificador_list  ir al estado 34
+
+
+Estado 21
 
     7 statement: expression TK_PUNTOCOMA .
 
     $default  reduce usando la regla 7 (statement)
 
 
-Estado 20
-
-   20 expression: expression TK_MAS . factor
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    factor  ir al estado 30
-    term    ir al estado 15
-
-
-Estado 21
-
-   21 expression: expression TK_MENOS . factor
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    factor  ir al estado 31
-    term    ir al estado 15
-
-
 Estado 22
 
-   23 factor: factor TK_MULTI . term
+   21 expression: expression TK_MAS . factor
 
     TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
 
-    term  ir al estado 32
+    factor  ir al estado 35
+    term    ir al estado 16
 
 
 Estado 23
 
-   24 factor: factor TK_DIVI . term
+   22 expression: expression TK_MENOS . factor
 
     TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
 
-    term  ir al estado 33
+    factor  ir al estado 36
+    term    ir al estado 16
 
 
 Estado 24
 
-    4 statement: TK_PRINT '(' expres_Total . ')' TK_PUNTOCOMA
-   15 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
+   24 factor: factor TK_MULTI . term
 
-    TK_IGUALIGUAL  desplazar e ir al estado 34
-    ')'            desplazar e ir al estado 35
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    term  ir al estado 37
 
 
 Estado 25
 
-   16 expres_Total: relacionalExpre .
-   17 relacionalExpre: relacionalExpre . TK_MAYOR expression
-   18                | relacionalExpre . TK_MENOR expres_Total
+   25 factor: factor TK_DIVI . term
 
-    TK_MAYOR  desplazar e ir al estado 36
-    TK_MENOR  desplazar e ir al estado 37
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    term  ir al estado 38
+
+
+Estado 26
+
+   28 term: TK_IDENTIFICADOR .
+
+    $default  reduce usando la regla 28 (term)
+
+
+Estado 27
+
+    4 statement: TK_PRINT '(' expres_Total . ')' TK_PUNTOCOMA
+   16 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
+
+    TK_IGUALIGUAL  desplazar e ir al estado 39
+    ')'            desplazar e ir al estado 40
+
+
+Estado 28
+
+   17 expres_Total: relacionalExpre .
+   18 relacionalExpre: relacionalExpre . TK_MAYOR expression
+   19                | relacionalExpre . TK_MENOR expres_Total
+
+    TK_MAYOR  desplazar e ir al estado 41
+    TK_MENOR  desplazar e ir al estado 42
+
+    TK_MAYOR  [reduce usando la regla 17 (expres_Total)]
+    TK_MENOR  [reduce usando la regla 17 (expres_Total)]
+    $default  reduce usando la regla 17 (expres_Total)
+
+
+Estado 29
+
+   20 relacionalExpre: expression .
+   21 expression: expression . TK_MAS factor
+   22           | expression . TK_MENOS factor
+
+    TK_MAS    desplazar e ir al estado 22
+    TK_MENOS  desplazar e ir al estado 23
+
+    $default  reduce usando la regla 20 (relacionalExpre)
+
+
+Estado 30
+
+   15 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL . expres_Total TK_PUNTOCOMA
+
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    expres_Total     ir al estado 43
+    relacionalExpre  ir al estado 28
+    expression       ir al estado 29
+    factor           ir al estado 15
+    term             ir al estado 16
+
+
+Estado 31
+
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' . identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+
+    TK_IDENTIFICADOR  desplazar e ir al estado 33
+
+    identificador_list  ir al estado 44
+
+
+Estado 32
+
+   14 if_stmt: TK_IF '(' expres_Total . ')' TK_BEGIN statement_list TK_END
+   16 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
+
+    TK_IGUALIGUAL  desplazar e ir al estado 39
+    ')'            desplazar e ir al estado 45
+
+
+Estado 33
+
+   12 identificador_list: TK_IDENTIFICADOR .
+   13                   | TK_IDENTIFICADOR . TK_COMIA TK_IDENTIFICADOR
+
+    TK_COMIA  desplazar e ir al estado 46
+
+    $default  reduce usando la regla 12 (identificador_list)
+
+
+Estado 34
+
+   10 llamar_metodos: TK_IDENTIFICADOR '(' identificador_list . ')' TK_PUNTOCOMA
+
+    ')'  desplazar e ir al estado 47
+
+
+Estado 35
+
+   21 expression: expression TK_MAS factor .
+   24 factor: factor . TK_MULTI term
+   25       | factor . TK_DIVI term
+
+    TK_MULTI  desplazar e ir al estado 24
+    TK_DIVI   desplazar e ir al estado 25
+
+    $default  reduce usando la regla 21 (expression)
+
+
+Estado 36
+
+   22 expression: expression TK_MENOS factor .
+   24 factor: factor . TK_MULTI term
+   25       | factor . TK_DIVI term
+
+    TK_MULTI  desplazar e ir al estado 24
+    TK_DIVI   desplazar e ir al estado 25
+
+    $default  reduce usando la regla 22 (expression)
+
+
+Estado 37
+
+   24 factor: factor TK_MULTI term .
+
+    $default  reduce usando la regla 24 (factor)
+
+
+Estado 38
+
+   25 factor: factor TK_DIVI term .
+
+    $default  reduce usando la regla 25 (factor)
+
+
+Estado 39
+
+   16 expres_Total: expres_Total TK_IGUALIGUAL . relacionalExpre
+
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    relacionalExpre  ir al estado 48
+    expression       ir al estado 29
+    factor           ir al estado 15
+    term             ir al estado 16
+
+
+Estado 40
+
+    4 statement: TK_PRINT '(' expres_Total ')' . TK_PUNTOCOMA
+
+    TK_PUNTOCOMA  desplazar e ir al estado 49
+
+
+Estado 41
+
+   18 relacionalExpre: relacionalExpre TK_MAYOR . expression
+
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    expression  ir al estado 50
+    factor      ir al estado 15
+    term        ir al estado 16
+
+
+Estado 42
+
+   19 relacionalExpre: relacionalExpre TK_MENOR . expres_Total
+
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 26
+
+    expres_Total     ir al estado 51
+    relacionalExpre  ir al estado 28
+    expression       ir al estado 29
+    factor           ir al estado 15
+    term             ir al estado 16
+
+
+Estado 43
+
+   15 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total . TK_PUNTOCOMA
+   16 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
+
+    TK_PUNTOCOMA   desplazar e ir al estado 52
+    TK_IGUALIGUAL  desplazar e ir al estado 39
+
+
+Estado 44
+
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list . ')' TK_IGUAL TK_BEGIN statement_list TK_END
+
+    ')'  desplazar e ir al estado 53
+
+
+Estado 45
+
+   14 if_stmt: TK_IF '(' expres_Total ')' . TK_BEGIN statement_list TK_END
+
+    TK_BEGIN  desplazar e ir al estado 54
+
+
+Estado 46
+
+   13 identificador_list: TK_IDENTIFICADOR TK_COMIA . TK_IDENTIFICADOR
+
+    TK_IDENTIFICADOR  desplazar e ir al estado 55
+
+
+Estado 47
+
+   10 llamar_metodos: TK_IDENTIFICADOR '(' identificador_list ')' . TK_PUNTOCOMA
+
+    TK_PUNTOCOMA  desplazar e ir al estado 56
+
+
+Estado 48
+
+   16 expres_Total: expres_Total TK_IGUALIGUAL relacionalExpre .
+   18 relacionalExpre: relacionalExpre . TK_MAYOR expression
+   19                | relacionalExpre . TK_MENOR expres_Total
+
+    TK_MAYOR  desplazar e ir al estado 41
+    TK_MENOR  desplazar e ir al estado 42
 
     TK_MAYOR  [reduce usando la regla 16 (expres_Total)]
     TK_MENOR  [reduce usando la regla 16 (expres_Total)]
     $default  reduce usando la regla 16 (expres_Total)
 
 
-Estado 26
-
-   19 relacionalExpre: expression .
-   20 expression: expression . TK_MAS factor
-   21           | expression . TK_MENOS factor
-
-    TK_MAS    desplazar e ir al estado 20
-    TK_MENOS  desplazar e ir al estado 21
-
-    $default  reduce usando la regla 19 (relacionalExpre)
-
-
-Estado 27
-
-   14 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL . expres_Total TK_PUNTOCOMA
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    expres_Total     ir al estado 38
-    relacionalExpre  ir al estado 25
-    expression       ir al estado 26
-    factor           ir al estado 14
-    term             ir al estado 15
-
-
-Estado 28
-
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' . identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
-
-    TK_COMIA  desplazar e ir al estado 39
-
-    $default  reduce usando la regla 10 (identificador_list)
-
-    identificador_list  ir al estado 40
-
-
-Estado 29
-
-   13 if_stmt: TK_IF '(' expres_Total . ')' TK_BEGIN statement_list TK_END
-   15 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
-
-    TK_IGUALIGUAL  desplazar e ir al estado 34
-    ')'            desplazar e ir al estado 41
-
-
-Estado 30
-
-   20 expression: expression TK_MAS factor .
-   23 factor: factor . TK_MULTI term
-   24       | factor . TK_DIVI term
-
-    TK_MULTI  desplazar e ir al estado 22
-    TK_DIVI   desplazar e ir al estado 23
-
-    $default  reduce usando la regla 20 (expression)
-
-
-Estado 31
-
-   21 expression: expression TK_MENOS factor .
-   23 factor: factor . TK_MULTI term
-   24       | factor . TK_DIVI term
-
-    TK_MULTI  desplazar e ir al estado 22
-    TK_DIVI   desplazar e ir al estado 23
-
-    $default  reduce usando la regla 21 (expression)
-
-
-Estado 32
-
-   23 factor: factor TK_MULTI term .
-
-    $default  reduce usando la regla 23 (factor)
-
-
-Estado 33
-
-   24 factor: factor TK_DIVI term .
-
-    $default  reduce usando la regla 24 (factor)
-
-
-Estado 34
-
-   15 expres_Total: expres_Total TK_IGUALIGUAL . relacionalExpre
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    relacionalExpre  ir al estado 42
-    expression       ir al estado 26
-    factor           ir al estado 14
-    term             ir al estado 15
-
-
-Estado 35
-
-    4 statement: TK_PRINT '(' expres_Total ')' . TK_PUNTOCOMA
-
-    TK_PUNTOCOMA  desplazar e ir al estado 43
-
-
-Estado 36
-
-   17 relacionalExpre: relacionalExpre TK_MAYOR . expression
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    expression  ir al estado 44
-    factor      ir al estado 14
-    term        ir al estado 15
-
-
-Estado 37
-
-   18 relacionalExpre: relacionalExpre TK_MENOR . expres_Total
-
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
-
-    expres_Total     ir al estado 45
-    relacionalExpre  ir al estado 25
-    expression       ir al estado 26
-    factor           ir al estado 14
-    term             ir al estado 15
-
-
-Estado 38
-
-   14 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total . TK_PUNTOCOMA
-   15 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
-
-    TK_PUNTOCOMA   desplazar e ir al estado 46
-    TK_IGUALIGUAL  desplazar e ir al estado 34
-
-
-Estado 39
-
-   12 identificador_list: TK_COMIA .
-
-    $default  reduce usando la regla 12 (identificador_list)
-
-
-Estado 40
-
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list . ')' TK_IGUAL TK_BEGIN statement_list TK_END
-   11 identificador_list: identificador_list . TK_IDENTIFICADOR
-
-    TK_IDENTIFICADOR  desplazar e ir al estado 47
-    ')'               desplazar e ir al estado 48
-
-
-Estado 41
-
-   13 if_stmt: TK_IF '(' expres_Total ')' . TK_BEGIN statement_list TK_END
-
-    TK_BEGIN  desplazar e ir al estado 49
-
-
-Estado 42
-
-   15 expres_Total: expres_Total TK_IGUALIGUAL relacionalExpre .
-   17 relacionalExpre: relacionalExpre . TK_MAYOR expression
-   18                | relacionalExpre . TK_MENOR expres_Total
-
-    TK_MAYOR  desplazar e ir al estado 36
-    TK_MENOR  desplazar e ir al estado 37
-
-    TK_MAYOR  [reduce usando la regla 15 (expres_Total)]
-    TK_MENOR  [reduce usando la regla 15 (expres_Total)]
-    $default  reduce usando la regla 15 (expres_Total)
-
-
-Estado 43
+Estado 49
 
     4 statement: TK_PRINT '(' expres_Total ')' TK_PUNTOCOMA .
 
     $default  reduce usando la regla 4 (statement)
 
 
-Estado 44
-
-   17 relacionalExpre: relacionalExpre TK_MAYOR expression .
-   20 expression: expression . TK_MAS factor
-   21           | expression . TK_MENOS factor
-
-    TK_MAS    desplazar e ir al estado 20
-    TK_MENOS  desplazar e ir al estado 21
-
-    $default  reduce usando la regla 17 (relacionalExpre)
-
-
-Estado 45
-
-   15 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
-   18 relacionalExpre: relacionalExpre TK_MENOR expres_Total .
-
-    TK_IGUALIGUAL  desplazar e ir al estado 34
-
-    TK_IGUALIGUAL  [reduce usando la regla 18 (relacionalExpre)]
-    $default       reduce usando la regla 18 (relacionalExpre)
-
-
-Estado 46
-
-   14 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA .
-
-    $default  reduce usando la regla 14 (assignment_stmt)
-
-
-Estado 47
-
-   11 identificador_list: identificador_list TK_IDENTIFICADOR .
-
-    $default  reduce usando la regla 11 (identificador_list)
-
-
-Estado 48
-
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' . TK_IGUAL TK_BEGIN statement_list TK_END
-
-    TK_IGUAL  desplazar e ir al estado 50
-
-
-Estado 49
-
-   13 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN . statement_list TK_END
-
-    $default  reduce usando la regla 2 (statement_list)
-
-    statement_list  ir al estado 51
-
-
 Estado 50
 
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL . TK_BEGIN statement_list TK_END
+   18 relacionalExpre: relacionalExpre TK_MAYOR expression .
+   21 expression: expression . TK_MAS factor
+   22           | expression . TK_MENOS factor
 
-    TK_BEGIN  desplazar e ir al estado 52
+    TK_MAS    desplazar e ir al estado 22
+    TK_MENOS  desplazar e ir al estado 23
+
+    $default  reduce usando la regla 18 (relacionalExpre)
 
 
 Estado 51
 
-    3 statement_list: statement_list . statement
-   13 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list . TK_END
+   16 expres_Total: expres_Total . TK_IGUALIGUAL relacionalExpre
+   19 relacionalExpre: relacionalExpre TK_MENOR expres_Total .
 
-    TK_PRINT          desplazar e ir al estado 4
-    TK_LET            desplazar e ir al estado 5
-    TK_IF             desplazar e ir al estado 6
-    TK_END            desplazar e ir al estado 53
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
+    TK_IGUALIGUAL  desplazar e ir al estado 39
 
-    statement          ir al estado 9
-    metodos_statement  ir al estado 10
-    if_stmt            ir al estado 11
-    assignment_stmt    ir al estado 12
-    expression         ir al estado 13
-    factor             ir al estado 14
-    term               ir al estado 15
+    TK_IGUALIGUAL  [reduce usando la regla 19 (relacionalExpre)]
+    $default       reduce usando la regla 19 (relacionalExpre)
 
 
 Estado 52
 
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN . statement_list TK_END
+   15 assignment_stmt: TK_LET TK_IDENTIFICADOR TK_IGUAL expres_Total TK_PUNTOCOMA .
 
-    $default  reduce usando la regla 2 (statement_list)
-
-    statement_list  ir al estado 54
+    $default  reduce usando la regla 15 (assignment_stmt)
 
 
 Estado 53
 
-   13 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list TK_END .
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' . TK_IGUAL TK_BEGIN statement_list TK_END
 
-    $default  reduce usando la regla 13 (if_stmt)
+    TK_IGUAL  desplazar e ir al estado 57
 
 
 Estado 54
 
-    3 statement_list: statement_list . statement
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list . TK_END
+   14 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN . statement_list TK_END
 
-    TK_PRINT          desplazar e ir al estado 4
-    TK_LET            desplazar e ir al estado 5
-    TK_IF             desplazar e ir al estado 6
-    TK_END            desplazar e ir al estado 55
-    TK_NUMBER         desplazar e ir al estado 7
-    TK_IDENTIFICADOR  desplazar e ir al estado 8
+    $default  reduce usando la regla 2 (statement_list)
 
-    statement          ir al estado 9
-    metodos_statement  ir al estado 10
-    if_stmt            ir al estado 11
-    assignment_stmt    ir al estado 12
-    expression         ir al estado 13
-    factor             ir al estado 14
-    term               ir al estado 15
+    statement_list  ir al estado 58
 
 
 Estado 55
 
-    9 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END .
+   13 identificador_list: TK_IDENTIFICADOR TK_COMIA TK_IDENTIFICADOR .
 
-    $default  reduce usando la regla 9 (metodos_statement)
+    $default  reduce usando la regla 13 (identificador_list)
+
+
+Estado 56
+
+   10 llamar_metodos: TK_IDENTIFICADOR '(' identificador_list ')' TK_PUNTOCOMA .
+
+    $default  reduce usando la regla 10 (llamar_metodos)
+
+
+Estado 57
+
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL . TK_BEGIN statement_list TK_END
+
+    TK_BEGIN  desplazar e ir al estado 59
+
+
+Estado 58
+
+    3 statement_list: statement_list . statement
+   14 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list . TK_END
+
+    TK_PRINT          desplazar e ir al estado 4
+    TK_LET            desplazar e ir al estado 5
+    TK_IF             desplazar e ir al estado 6
+    TK_END            desplazar e ir al estado 60
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 8
+
+    statement          ir al estado 9
+    llamar_metodos     ir al estado 10
+    metodos_statement  ir al estado 11
+    if_stmt            ir al estado 12
+    assignment_stmt    ir al estado 13
+    expression         ir al estado 14
+    factor             ir al estado 15
+    term               ir al estado 16
+
+
+Estado 59
+
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN . statement_list TK_END
+
+    $default  reduce usando la regla 2 (statement_list)
+
+    statement_list  ir al estado 61
+
+
+Estado 60
+
+   14 if_stmt: TK_IF '(' expres_Total ')' TK_BEGIN statement_list TK_END .
+
+    $default  reduce usando la regla 14 (if_stmt)
+
+
+Estado 61
+
+    3 statement_list: statement_list . statement
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list . TK_END
+
+    TK_PRINT          desplazar e ir al estado 4
+    TK_LET            desplazar e ir al estado 5
+    TK_IF             desplazar e ir al estado 6
+    TK_END            desplazar e ir al estado 62
+    TK_NUMBER         desplazar e ir al estado 7
+    TK_IDENTIFICADOR  desplazar e ir al estado 8
+
+    statement          ir al estado 9
+    llamar_metodos     ir al estado 10
+    metodos_statement  ir al estado 11
+    if_stmt            ir al estado 12
+    assignment_stmt    ir al estado 13
+    expression         ir al estado 14
+    factor             ir al estado 15
+    term               ir al estado 16
+
+
+Estado 62
+
+   11 metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END .
+
+    $default  reduce usando la regla 11 (metodos_statement)

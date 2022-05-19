@@ -34,7 +34,7 @@
 %type<int_t> expres_Total relacionalExpre expression;
 
 %token  TK_PUNTOCOMA TK_MAS TK_MENOS TK_MULTI 
-%token TK_DIVI  TK_IGUAL TK_LET TK_IF TK_BEGIN TK_END TK_IGUALIGUAL TK_MAYOR  TK_MENOR TK_COMIA
+%token TK_DIVI  TK_IGUAL TK_LET TK_IF TK_BEGIN TK_END TK_IGUALIGUAL TK_MAYOR  TK_MENOR TK_COMIA TK_RETURN
 /*%token TK_MAYOR TK_MENOR TK_IGUALIGUALTK_COMIA */
 %token<int_t> TK_NUMBER 
 %token<string_t> TK_IDENTIFICADOR
@@ -71,7 +71,8 @@ statement: TK_PRINT '(' expres_Total ')' TK_PUNTOCOMA   { printf("%f\n",$3); }
  ;
 
 
- metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list TK_END
+ metodos_statement: TK_LET TK_IDENTIFICADOR '(' identificador_list ')' TK_IGUAL TK_BEGIN statement_list 
+  TK_RETURN expression TK_PUNTOCOMA TK_END 
  {if(metodos.count($2)){
         printf("Error metodo ya existe");
         exit(1);

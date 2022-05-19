@@ -15,7 +15,11 @@ let gcd(a, b) = begin
     if (a == 0)
     begin
         print(4+5);
+        print(4+5);
+        4+3;
     end
+    4+8;
+    return a;
 end
 
 gcd(a, b); 
@@ -26,6 +30,7 @@ let gcd2(a, b) = begin
     begin
         print(4-5);
     end
+return 1;
 end
  print(4+5);
 5 +5;

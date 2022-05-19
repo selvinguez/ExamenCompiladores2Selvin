@@ -1,0 +1,10 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/selvinguez/Examen'
+bison -v --defines=tokens.h -W -o examen_parser.cpp examen.y
+g++  -g -c -o examen_parser.o examen_parser.cpp
+flex -o examen_lexer.cpp examen.l
+g++ -g -c -o examen_lexer.o examen_lexer.cpp
+g++  -g -c -o main.o main.cpp
+g++  -g -o examen examen_parser.o examen_lexer.o main.o
+make: Leaving directory '/home/selvinguez/Examen'
+ 

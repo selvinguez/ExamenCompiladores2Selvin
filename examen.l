@@ -16,6 +16,7 @@ NUM [0-9]+("."[0-9]+)?
 "if" {return TK_IF;}
 "begin" {return TK_BEGIN;}
 "end" {return TK_END;}
+"return" {return TK_RETURN;}
 
 {NUM} { yylval.int_t = atoi(yytext); return TK_NUMBER;}
 {IDENTIFICADOR} { yylval.string_t = strdup(yytext); return TK_IDENTIFICADOR;}
